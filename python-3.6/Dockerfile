@@ -23,7 +23,7 @@ RUN apt-get update && \
 	rm -rf /var/lib/apt/lists/* && \
 	update-alternatives --install /usr/bin/python3 python /usr/bin/python3.6 1 && \
 	python -V && pip freeze && \
-	useradd -r -s /bin/bash -c "application user" -d /app -u 1001 -g 100 -m appuser
+	useradd -r -s /bin/bash -c "application user" -d /app -u 1001 -g 100 -m app
 WORKDIR /app
 USER 1001:100
 CMD ["python3"]
