@@ -17,12 +17,13 @@ LABEL maintainer="Kristian Berg <kristian.berg@evry.com>" \
       org.opencontainers.image.licenses="proprietary-license" \
       org.opencontainers.image.description="Base image for python 3.6"
 
+ARG PYTHON_VERSION=3.6
 RUN apt-get update && \
-	apt-get -y install python3.6 python3.6-minimal python-pip && \
+	apt-get -y --no-install-recommends install python${PYTHON_VERSION} python-pip && \
 	apt-get clean && \
 	rm -rf /var/lib/apt/lists/* && \
-	update-alternatives --install /usr/bin/python3 python /usr/bin/python3.6 1 && \
-	python -V && pip freeze && \
+	update-alternatives --install /usr/bin/python3 python /usr/bin/python${PYTHON_VERSION} 1 && \
+	python3 -V && pip freeze && \
 	useradd -r -s /bin/bash -c "application user" -d /app -u 1001 -g 100 -m app
 WORKDIR /app
 USER 1001:100
