@@ -17,7 +17,7 @@ LABEL maintainer="Kristian Berg <kristian.berg@evry.com>" \
       org.opencontainers.image.licenses="proprietary-license" \
       org.opencontainers.image.description="Base image for python 3.6"
 
-ARG PYTHON_VERSION=3.7
+ARG PYTHON_VERSION=3.8
 RUN apt-get update && \
 	apt-get -y --no-install-recommends install python${PYTHON_VERSION} python-pip && \
 	apt-get clean && \
