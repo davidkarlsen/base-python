@@ -1,4 +1,4 @@
-FROM python:3.6.10-slim
+FROM quay.io/evryfs/base-ubuntu:bionic-20200112
 ARG BUILD_DATE
 ARG BUILD_URL
 ARG GIT_URL
@@ -17,12 +17,13 @@ LABEL maintainer="Kristian Berg <kristian.berg@evry.com>" \
       org.opencontainers.image.licenses="proprietary-license" \
       org.opencontainers.image.description="Base image for python 3.6"
 
-RUN apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends curl
-RUN rm -rf /var/lib/apt/lists/*
-RUN python -V
-RUN pip freeze
-RUN useradd -r -s /bin/bash -c "application user" -d /app -u 1001 -g 100 -m appuser
+RUN apt-get update && \
+	apt-get -y install python3.6 python3.6-minimal python-pip && \
+	apt-get clean && \
+	rm -rf /var/lib/apt/lists/* && \
+	update-alternatives --install /usr/bin/python3 python /usr/bin/python3.6 1 && \
+	python -V && pip freeze && \
+	useradd -r -s /bin/bash -c "application user" -d /app -u 1001 -g 100 -m appuser
 WORKDIR /app
 USER 1001:100
-CMD ["python"]
+CMD ["python3"]
